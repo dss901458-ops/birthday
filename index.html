@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birhday</title>
+
+<style>
+.welcome-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    background: radial-gradient(
+        circle,
+        #351433,
+        #100713 75%
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    text-align: center;
+}
+
+.welcome-content {
+    animation: welcomeAppear 1.2s ease;
+}
+
+.gift-icon {
+    font-size: 100px;
+    animation: giftBounce 2s infinite;
+    filter: drop-shadow(0 0 20px #ff4dc4);
+}
+
+.welcome-content h1 {
+    color: #ff8bdc;
+    font-size: 40px;
+    text-shadow: 0 0 20px #ff39bd;
+}
+
+.welcome-content p {
+    color: #ffd6f3;
+    font-size: 18px;
+}
+
+.welcome-small {
+    font-size: 14px !important;
+    opacity: .7;
+}
+
+.welcome-content button {
+    margin-top: 25px;
+    padding: 16px 30px;
+    background: #ed83d0;
+    border: 2px solid #ffc0ed;
+    border-radius: 15px;
+    color: #290d27;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff39bd;
+}
+
+.welcome-content button:hover {
+    transform: scale(1.1);
+    background: #ffc0ed;
+}
+
+@keyframes giftBounce {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes welcomeAppear {
+    from {
+        opacity: 0;
+        transform: scale(.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #13070d;
+    color: #ffe0f5;
+    font-family: Tahoma, Arial, sans-serif;
+    text-align: center;
+    overflow-x: hidden;
+    
+}
+header {
+    padding: 25px 12px;
+}
+
+header h1 {
+    font-size: clamp(32px, 7vw, 60px);
+    color: #ff8bdc;
+    text-shadow: 0 0 15px #ff39bd;
+}
+
+header p {
+    color: #ffc0ed;
+}
+
+.card {
+    display: none;
+    width: min(92%, 550px);
+    margin: 25px auto;
+    padding: 30px 20px;
+    background: #211126;
+    border: 2px solid #ed8bd8;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #d83aab55;
+}
+
+.card.active {
+    display: block;
+    animation: appear .7s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    color: #ff9cdd;
+    font-size: 25px;
+}
+
+h3 {
+    color: #ffc0ed;
+}
+
+button {
+    background: #ed83d0;
+    border: 2px solid #ffb6e9;
+    padding: 13px 20px;
+    margin: 10px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #290d27;
+    font-weight: bold;
+    transition: .3s;
+}
+
+button:hover {
+    background: #ffb6e9;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff61d0;
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.option {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+}
+
+.result {
+    color: #ffb2e9;
+    line-height: 2;
+    font-size: 18px;
+}
+
+.stat {
+    background: #381a3c;
+    padding: 12px;
+    border-radius: 12px;
+    margin: 12px 0;
+    text-align: right;
+}
+
+.bar {
+    height: 10px;
+    background: #59234f;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #ff53bd, #ffc0ed);
+    border-radius: 20px;
+    animation: fillBar 1.5s ease forwards;
+}
+
+@keyframes fillBar {
+    to {
+        width: var(--percent);
+    }
+}
+
+.song-player {
+    background: linear-gradient(145deg, #39183c, #1d1025);
+    border: 2px solid #ff8bdc;
+    border-radius: 25px;
+    padding: 25px 18px;
+    margin: 20px auto;
+    box-shadow: 0 0 25px #ff39bd55;
+}
+
+.song-icon {
+    font-size: 30px;
+    color: #ff8bdc;
+}
+
+.song-title {
+    color: #ff9cdd;
+    font-size: 25px;
+}
+
+.song-subtitle {
+    color: #e9b6db;
+}
+
+.album-cover {
+    width: 190px;
+    height: 190px;
+    margin: 25px auto;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ff71c8, #6c245f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    position: relative;
+    box-shadow: 0 0 25px #ff39bd88;
+}
+
+.album-cover span {
+    position: absolute;
+    font-size: 35px;
+    bottom: 15px;
+    right: 15px;
+}
+
+.song-artist {
+    color: #ffb6e9;
+}
+
+.song-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.song-controls button {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    font-size: 20px;
+}
+
+#playBtn {
+    width: 65px;
+    height: 65px;
+    font-size: 27px;
+    background: #ff8bdc;
+}
+
+#songProgress {
+    width: 100%;
+    accent-color: #ff8bdc;
+    cursor: pointer;
+}
+
+.song-time {
+    display: flex;
+    justify-content: space-between;
+    color: #ffc0ed;
+    font-size: 13px;
+}
+.album-cover {
+    width: 220px;
+    height: 220px;
+    margin: 25px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid #ff8bdc;
+    box-shadow: 0 0 25px #ff39bd88;
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 
+ddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+dddddddddddddddddddddddddddd
+dddddddd
+
+ffffffffffffffffffffffffffffff
+
+fffffffffffffffffffffffffffffffff
+ffffffffffff
+ddddddddddddddddddddddddddddddddd
+
+ddddddddddddddd */
+.message {
+    font-size: 18px;
+    line-height: 2.2;
+    color: #ffe0f5;
+    white-space: pre-line;
+}
+
+.heart {
+    position: fixed;
+    bottom: -30px;
+    color: #ff75ce;
+    animation: float 7s linear forwards;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes float {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+footer {
+    padding: 25px;
+    color: #ff91db;
+}
+.birthday-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+
+    background: radial-gradient(
+        circle,
+        #42153d,
+        #100713 75%
+    );
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.birthday-content h1 {
+    color: #ff8bdc;
+    font-size: clamp(35px, 8vw, 55px);
+    text-shadow: 0 0 20px #ff39bd;
+}
+
+.birthday-content h2 {
+    color: white;
+    font-size: 40px;
+}
+
+.birthday-emoji {
+    font-size: 90px;
+    animation: giftBounce 2s infinite;
+}
+
+.birthday-content p {
+    color: #ffc0ed;
+    line-height: 2;
+}
+
+</style>
+</head>
+
+<body>
+<!-- Secret Welcome Screen -->
+<!-- 
+<section class="welcome-screen" id="welcome">
+
+    <div class="welcome-content">
+
+        <div class="gift-icon">🎁</div>
+
+        <p class="welcome-small">
+           
+        </p>
+
+        <button onclick="openGift()">
+            OPEN✨
+        </button>
+
+    </div>
+
+</section> -->
+
+<header>
+
+    <h1>! Happy Birthday 🎂</h1>
+
+  
+
+</header>
+
+
+<!-- المرحلة الأولى: السؤال -->
+
+<section class="card active" id="quiz">
+
+    <h2>جاوبي يا عسل</h2>
+
+    <h3>مين أكتر واحد بينكد ؟</h3>
+
+    <button class="option" onclick="answer(2,this)">
+        جيسي 🐱
+    </button>
+
+    <button class="option" onclick="answer(3,this)">
+        اندرو 😂
+    </button>
+
+    <div id="quizResult"></div>
+
+</section>
+
+
+<!-- المرحلة الثانية: تحليل الشخصية -->
+
+<section class="card" id="analysis">
+
+    <h2>🔍  Analysis for Jessy </h2>
+
+    <h3></h3>
+
+    <div class="stat">
+        نسبة النكد: 95% 😭
+        <div class="bar">
+            <div class="fill" style="--percent:95%"></div>
+        </div>
+    </div>
+
+    <div class="stat">
+        نسبة العند: 100% 🤦‍♀️
+        <div class="bar">
+            <div class="fill" style="--percent:100%"></div>
+        </div>
+    </div>
+
+    <div class="stat">
+        نسبة الطيبة: 0% 💗
+        <div class="bar">
+            <div class="fill" style="--percent:100%"></div>
+        </div>
+    </div>
+
+    <h3>احم بهزر والله  </h3>
+
+   
+    <button onclick="next('surprise')">
+    كملي كملي 😂😂
+    </button>
+
+</section>
+
+
+<!-- المرحلة الثالثة: المفاجأة -->
+
+<section class="card" id="surprise">
+
+    <h2>🎁Do you want to see the surprise?</h2>
+
+    <h3> 💗</h3>
+
+    <button onclick="next('song')">
+       yessss 💕
+    </button>
+
+    <button onclick="next('song')">
+        absolutely yess😭❤️
+    </button>
+
+</section>
+
+<!-- Birthday Celebration -->
+
+<section class="birthday-screen" id="birthday">
+
+    <div class="birthday-content">
+
+        <div class="birthday-emoji">🎂</div>
+
+        <h1>HAPPY BIRTHDAY</h1>
+
+        <h2>JOJO! ❤️</h2>
+
+        <p>
+            Today is your special day! 🎀
+        </p>
+
+        <p>
+            You deserve all the happiness in the world.
+        </p>
+
+        <button onclick="showSong()">
+            LET'S CELEBRATE 🎉
+        </button>
+
+    </div>
+
+</section>
+
+<!-- المرحلة الرابعة: الأغنية -->
+
+<section class="card" id="song">
+
+    <h2>🎀Special song 4 u</h2>
+<h3> اسمعيها كلها </h3>
+    <div class="song-player">
+
+        <div class="song-icon">🎵</div>
+
+        <h2 class="song-title"></h2>
+
+        <p class="song-subtitle">
+ 
+        </p>
+
+       <div class="album-cover">
+    <img src="jojo.jpg" >
+</div>
+
+        <h3>kol sana 💕</h3>
+
+        <p class="song-artist">ramy sabry</p>
+
+        <audio id="birthdaySong">
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="song-controls">
+
+            <button onclick="skipSong(-10)">⏪</button>
+
+            <button id="playBtn" onclick="toggleSong()">
+                ▶
+            </button>
+
+            <button onclick="skipSong(10)">⏩</button>
+
+        </div>
+
+        <input
+            type="range"
+            id="songProgress"
+            value="0"
+            min="0"
+            max="100"
+        >
+
+        <div class="song-time">
+            <span id="currentTime">0:00</span>
+            <span id="duration">0:00</span>
+        </div>
+
+    </div>
+
+    <button onclick="next('message')">
+        افتحي رسالتك 💌
+    </button>
+
+</section>
+
+
+<!-- المرحلة الخامسة: الرسالة -->
+
+<section class="card" id="message">
+
+    <h2>💌A Message 4 u</h2>
+
+    <div class="message" id="typed"></div>
+
+    <h2>best birhhday ya Jojo 🎂💕</h2>
+
+    <p></p>
+
+</section>
+
+
+<footer>
+ <p> 😜حونشايه Made it for u ya </p>
+</footer>
+
+
+
+<script>
+    function showBirthday() {
+
+    document.querySelectorAll(".card").forEach(card => {
+        card.classList.remove("active");
+    });
+
+    document.getElementById("birthday").style.display = "flex";
+
+}
+
+function showSong() {
+
+    document.getElementById("birthday").style.display = "none";
+
+    document.getElementById("song").classList.add("active");
+
+}
+
+
+
+
+function openGift() {
+
+    let welcome = document.getElementById("welcome");
+
+    welcome.style.transition = "opacity 1s";
+
+    welcome.style.opacity = "0";
+
+    setTimeout(() => {
+
+        welcome.style.display = "none";
+
+        document.getElementById("quiz").classList.add("active");
+
+    }, 1000);
+
+}
+
+// الانتقال بين المراحل
+
+function next(id) {
+
+    document.querySelectorAll(".card").forEach(card => {
+
+        card.classList.remove("active");
+
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    if(id === "message") {
+
+        typeMessage();
+
+    }
+
+}
+
+
+// السؤال الأول
+
+let answered = false;
+
+function answer(choice, button) {
+
+    if(answered) return;
+
+    answered = true;
+
+    let result = document.getElementById("quizResult");
+
+    let texts = [
+
+        "True!😂",
+
+        "true 😂🐱",
+
+        "اي نصب دا🙂🙂"
+
+    ];
+const song = document.getElementById("birthdaySong");
+
+const playBtn = document.getElementById("playBtn");
+
+const progress = document.getElementById("songProgress");
+
+const current = document.getElementById("currentTime");
+
+const duration = document.getElementById("duration");
+
+function toggleSong() {
+
+    if(song.paused) {
+
+        song.play();
+
+        playBtn.innerHTML = "❚❚";
+
+    } else {
+
+        song.pause();
+
+        playBtn.innerHTML = "▶";
+
+    }
+
+}
+
+function skipSong(seconds) {
+
+    if(!Number.isFinite(song.duration)) return;
+
+    song.currentTime = Math.max(
+        0,
+        Math.min(song.duration, song.currentTime + seconds)
+    );
+
+}
+
+
+
+
+
+
+function formatTime(time) {
+
+    let minutes = Math.floor(time / 60);
+
+    let seconds = Math.floor(time % 60);
+
+    return minutes + ":" + String(seconds).padStart(2, "0");
+
+}
+
+song.addEventListener("loadedmetadata", () => {
+
+    duration.textContent = formatTime(song.duration);
+
+});
+
+song.addEventListener("timeupdate", () => {
+
+    if(!song.duration) return;
+
+    progress.value = (song.currentTime / song.duration) * 100;
+
+    current.textContent = formatTime(song.currentTime);
+
+});
+
+progress.addEventListener("input", () => {
+
+    if(song.duration) {
+
+        song.currentTime = (progress.value / 100) * song.duration;
+
+    }
+
+});
+
+song.addEventListener("ended", () => {
+
+    playBtn.innerHTML = "▶";
+
+});
+
+    result.innerHTML = `
+
+        <h3>إجابتك: ${texts[choice-1]}</h3>
+
+        <p class="result">
+        جاهزة تعرفي شخصيتك الحقيقية؟ 
+        </p>
+
+        <button onclick="next('analysis')">
+        شوفي تحليل شخصيتك 
+        </button>
+
+    `;
+
+    document.querySelectorAll("#quiz .option").forEach(btn => {
+
+        btn.disabled = true;
+
+    });
+
+}
+
+
+// الرسالة النهائية
+
+let message = `احممممم بس لا لا مهما تكبري مش هتبقي اطول مني😂 
+كولللللللل سنه وانتي طيبه يا احلي جيسي فالدنيا💓
+كل سنه وانتي كتكوته كده 😂😂
+كل سنه وانتي حنينه بجد
+كل سنه وانتي احسن طباخه 😜
+  كل سنه وانتي بت جدعه ومتفاهمه💓 
+ وياربببب السنه الجايه تكوني محققه كل اللي نفسك فيه وتكوني اللي عاوزاه🙏 
+  وتعرفي تعملي كبده احسن مني 😌
+  💞ويارب دايما نفضل سوي🤞`;
+
+function typeMessage() {
+
+
+
+
+
+    let element = document.getElementById("typed");
+
+    if(element.dataset.started) return;
+
+    element.dataset.started = "true";
+
+    let i = 0;
+
+    let timer = setInterval(() => {
+
+        element.textContent += message[i];
+
+        i++;
+
+        if(i >= message.length) {
+
+            clearInterval(timer);
+
+        }
+
+    }, 55);
+
+}
+
+
+// القلوب المتحركة
+
+setInterval(() => {
+
+    let heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML = ["💗","💕","♡","✨","🎀"]
+        [Math.floor(Math.random()*5)];
+
+    heart.style.left = Math.random()*100 + "vw";
+
+    heart.style.fontSize =
+        (15+Math.random()*20) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+
+}, 500);
+const song = document.getElementById("birthdaySong");
+
+const playBtn = document.getElementById("playBtn");
+
+
+
+
+
+const progress = document.getElementById("songProgress");
+
+const current = document.getElementById("currentTime");
+
+const duration = document.getElementById("duration");
+
+function toggleSong() {
+
+    if (song.paused) {
+
+        song.play().then(() => {
+            playBtn.innerHTML = "❚❚";
+        }).catch(error => {
+            alert("مش قادر أشغل الأغنية، تأكد من وجود ملف song.mp3");
+        });
+
+    } else {
+
+        song.pause();
+        playBtn.innerHTML = "▶";
+
+    }
+
+}
+
+function skipSong(seconds) {
+
+    if (!Number.isFinite(song.duration)) return;
+
+    song.currentTime = Math.max(
+        0,
+        Math.min(song.duration, song.currentTime + seconds)
+    );
+
+}
+
+function formatTime(time) {
+
+    let minutes = Math.floor(time / 60);
+
+    let seconds = Math.floor(time % 60);
+
+    return minutes + ":" + String(seconds).padStart(2, "0");
+
+}
+
+song.addEventListener("loadedmetadata", () => {
+    duration.textContent = formatTime(song.duration);
+});
+
+song.addEventListener("timeupdate", () => {
+
+    if (!song.duration) return;
+
+    progress.value = (song.currentTime / song.duration) * 100;
+
+    current.textContent = formatTime(song.currentTime);
+
+});
+
+progress.addEventListener("input", () => {
+
+    if (song.duration) {
+        song.currentTime = (progress.value / 100) * song.duration;
+    }
+
+});
+
+song.addEventListener("ended", () => {
+    playBtn.innerHTML = "▶";
+});
+
+</script>
+
+</body>
+</html>
